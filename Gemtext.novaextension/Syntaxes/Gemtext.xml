@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syntax name="gemtext">
+  <meta>
+    <name>Gemtext</name>
+    <type>markup</type>
+    <preferred-file-extension>gmi</preferred-file-extension>
+  </meta>
+  
+  <detectors>
+    <extension priority="1.0">gemini,gmi</extension>
+  </detectors>
+  
+  <scopes spell-check="true" lookup="dictionary">
+    <include syntax="self" collection="blocks" />
+  </scopes>
+  
+  <collections>
+    <collection name="blocks">
+      <scope name="gemtext.markup.heading.h1">
+        <symbol type="heading">
+          <context behavior="next" group="h1" priority="100" />
+        </symbol>
+        <starts-with>
+          <expression>^\#\s+</expression>
+        </starts-with>
+        <ends-with>
+          <expression>$</expression>
+        </ends-with>
+        <subscopes>
+          <scope name="gemtext.markup.heading.h1.name">
+            <starts-with>
+              <expression>(?!$)</expression>
+            </starts-with>
+            <ends-with>
+              <expression>(?=$)</expression>
+            </ends-with>
+          </scope>
+        </subscopes>
+      </scope>
+      <scope name="gemtext.markup.heading.h2">
+        <symbol type="heading">
+          <context behavior="next" group="h2" priority="90" />
+        </symbol>
+        <starts-with>
+          <expression>^\#\#\s+</expression>
+        </starts-with>
+        <ends-with>
+          <expression>$</expression>
+        </ends-with>
+        <subscopes>
+          <scope name="gemtext.markup.heading.h2.name">
+            <starts-with>
+              <expression>(?!$)</expression>
+            </starts-with>
+            <ends-with>
+              <expression>(?=$)</expression>
+            </ends-with>
+          </scope>
+        </subscopes>
+      </scope>
+      <scope name="gemtext.markup.heading.h3">
+        <symbol type="heading">
+          <context behavior="next" group="h3" priority="80" />
+        </symbol>
+        <starts-with>
+          <expression>^\#\#\#\s+</expression>
+        </starts-with>
+        <ends-with>
+          <expression>$</expression>
+        </ends-with>
+        <subscopes>
+          <scope name="gemtext.markup.heading.h3.name">
+            <starts-with>
+              <expression>(?!$)</expression>
+            </starts-with>
+            <ends-with>
+              <expression>(?=$)</expression>
+            </ends-with>
+          </scope>
+        </subscopes>
+      </scope>
+      <scope name="gemtext.markup.line">
+        <expression>^(?:(?:=+)|(?:-+))\s*$</expression>
+      </scope>
+      <scope name="gemtext.markup.block.quote">
+        <expression>^&gt;\s+</expression>
+      </scope>
+      <scope name="gemtext.markup.list.unordered">
+        <starts-with>
+          <expression>^\*\s+</expression>
+        </starts-with>
+        <ends-with>
+          <expression>$</expression>
+        </ends-with>
+        <subscopes>
+          <include syntax="self" />
+        </subscopes>
+      </scope>
+      <scope name="gemtext.markup.link" spell-check="false">
+        <expression>^(=>)\s+([^\s]*)\s+(.*)$</expression>
+        <capture number="1" name="markdown.link.bullet" />
+        <capture number="2" name="markdown.link.string" />
+        <capture number="3" name="markdown.link.markup.link" />
+      </scope>
+      
+      <include syntax="self" collection="code-blocks" />
+    </collection>
+    
+    <collection name="code-blocks">
+      <scope name="gemtext.markup.block.code.plain" spell-check="false">
+        <starts-with>
+          <expression>^\s*(```)</expression>
+          <capture number="1" name="gemtext.markup.bracket" />
+        </starts-with>
+        <ends-with>
+          <expression>^\s*(```)</expression>
+          <capture number="1" name="gemtext.markup.bracket" />
+        </ends-with>
+      </scope>
+    </collection>
+  </collections>
+</syntax>

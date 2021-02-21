@@ -1,0 +1,11 @@
+{
+    "identifier": "net.jessicastokes.Gemtext",
+    "name": "Gemtext",
+    "license": "MIT",
+    "organization": "Jessica Stokes",
+    "description": "Syntax extension for Gemtext, the lingua franca of the Gemini protocol.",
+    "version": "0.1.0",
+    "repository": "https://github.com/ticky/nova-gemtext",
+    "bugs": "https://github.com/ticky/nova-gemtext/issues",
+    "categories": ["languages"]
+}
